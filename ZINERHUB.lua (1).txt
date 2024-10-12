@@ -2553,26 +2553,40 @@ end
 --------------------------------------------------------------------------------------------------------------------------------------------
 --Create Tabs
 local Farming = Tabs.Main:AddSection("Farming")
-local listfastattack = {'Katakuri','Bone','Level'}
+local Chips = {"Level","Katakuri","Bone","Kill Aura"}
 
-    local DropdownDelayAttack = Tabs.Main:AddDropdown("DropdownDelayAttack", {
-        Title = "Select Farm",
-        Description = "",
-        Values = listfastattack,
-        Multi = false,
-        Default = 1,
-    })
-    DropdownDelayAttack:SetValue("Level")
-    DropdownDelayAttack:OnChanged(function(Value)
+local DropdownFarmMode = Tabs.Main:AddDropdown("DropdownFarmMode", {
+    Title = "Select Chip Raid",
+    Description = "",
+    Values = Chips,
+    Multi = false,
+    Default = 1,
+})
+DropdownFarmModd:SetValue("...")
+DropdownFarmMode:OnChanged(function(Value)
+    SelectChip = Value
+end)
+
+local ToggleFarmMode = Tabs.Main:AddToggle("ToggleFarmMode", {Title = "Auto Buy Chip", Description = "",Default = false })
+ToggleFarmMode:OnChanged(function(Value)
     _G.FarmMode = Value
-	if _G.FarmMode == "Level" then
-		_G.AutoLevel = Value
-	elseif _G.FarmMode == "Katakuri" then
-		_G.CakePrince = Value
-	elseif _G.FarmMode == "Bone" then
-		_G.AutoBone = Value
-	 end
- end)
+end)
+Options.ToggleFarmMode:SetValue(false)
+spawn(function()
+    pcall(function()
+        while wait(.1) do
+            if _G.FarmMode == "Level" then
+                _G.AutoLevel
+            elseif _G.FarmMode == "Katakuri" then
+                _G.CakePrince = Value
+            elseif _G.FarmMode == "Bone" then
+                _G.AutoBone = Value
+            elseif _G.FarmMode == "Kill Aura" then
+                _G.AutoNear = Value
+            end 
+        end
+    end)
+end)
 
     local ToggleLevel = Tabs.Main:AddToggle("ToggleLevel", {
         Title = "Auto Farm Level",
